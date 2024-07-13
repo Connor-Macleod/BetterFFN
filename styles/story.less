@@ -1,0 +1,440 @@
+.storyText {
+  width: 50vw;
+  padding: 0 50px;
+  width: auto;
+  text-align: justify;
+  line-height: 1.2;
+
+  font-size: var(--custom-font-size, 1rem);
+}
+
+.focus-mode{
+  @keyframes slideup {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-50px);
+    }
+  }
+  @keyframes slidedown {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(50px);
+    }
+  }
+  .topBar{
+    animation: slideup 0.5s ease-in-out;
+    transform: translateY(-50px);
+  }
+  .bottomBar, .progress{
+    animation: slidedown 0.5s ease-in-out;
+    transform: translateY(50px);
+  }
+}
+
+@keyframes returndown {
+  from {
+    transform: translateY(-50px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes returnup {
+  from {
+    transform: translateY(50px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+
+.bottomBar, .progress {
+  animation: returnup 0.5s ease-in-out;
+}
+.topBar {
+  animation: returndown 0.5s ease-in-out;
+  height: 50px;
+  width: 100vw;
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .light &{
+    background-color: #ffffff;
+    color: black;
+  }
+}
+
+.topBar * {
+  width: 150px;
+  color: #666!important; /* fuck you links */
+  text-align: center;
+  cursor: pointer;
+
+}
+
+.bottomBar {
+  height: 50px;
+  width: 100vw;
+  background-color: black;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  .light &{
+    background-color: #ffffff;
+    color: black;
+  }
+}
+
+.progress{
+  height: 4px;
+  background: black;
+  width: 100vw;
+  position: fixed;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+  .progressBar{
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    background: #881e1e;
+    transition: width 0.25s ease-in-out;
+    .light &{
+      background: darkred;
+    }
+  }
+  .endProgressBar{
+    opacity: 80%;
+    .light &{
+      opacity: 50%;
+    }
+  }
+
+  .light &{
+    background-color: #ffffff;
+  }
+}
+
+.pageButton {
+  height: 100%;
+  width: 50px;
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+
+  .light &{
+    background-color: #ffffff;
+    color: black;
+  }
+}
+
+.nextPageButton {
+  justify-self: flex-end;
+}
+
+.chapterNumber{
+  align-self: center;
+}
+
+@keyframes showpage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hidepage {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.storyWrapper {
+  margin-top: 75px;
+  column-width: calc(50vw - 100px);
+  column-fill: auto;
+  column-gap: 0;
+  column-rule: none;
+  height: calc(100vh - 150px);
+  overflow: hidden;
+  animation: showpage 0.25s linear;
+  &.scrolling{
+    animation: hidepage 0.25s linear;
+    opacity: 0;
+  }
+}
+
+.titlePage{
+  width: calc(50vw - 100px);
+  height: 100%;
+  break-before: column;
+  break-after: column;
+  .title{
+    padding: 0 20px;
+    text-align: center;
+  }
+}
+
+.blankPage{
+  width: calc(50vw - 100px);
+  height: 100%;
+  break-before: column;
+  break-after: column;
+}
+
+.titlePageAlternate{
+  display: none;
+  gap: 10px;
+}
+.titlePageDefault{
+  display: flex
+}
+
+.titlePageDefault, .titlePageAlternate {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titlePage:hover .titlePageAlternate{
+  display: flex;
+}
+.titlePage:hover .titlePageDefault{
+  display: none;
+}
+
+.titlePageSynopsis{
+  width: 70%;
+}
+
+.titlePageCharacters{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding-top: 5px;
+}
+
+.titlePageCharacters .pairing + .characters{
+  border-top: 1px solid #666;
+  padding-top: 5px;
+}
+
+.storyWrapper hr{
+  break-after: column;
+  break-before: avoid-column;
+  height: 1px;
+  border: none;
+  margin: 5px 30px;
+  background: rgb(102,102,102);
+  background: linear-gradient(90deg, rgba(102,102,102,0) 0%, rgba(102,102,102,1) 35%, rgba(102,102,102,1) 65%, rgba(102,102,102,0) 100%);
+
+}
+
+.storyWrapper p{
+  margin: 0;
+  margin-block-end: calc(1.25 * var(--custom-font-size, 1rem));
+}
+
+.storyImage{
+  max-height: calc(100% - 180px);
+  border-radius: 30px;
+  border: 3px solid white;
+
+  .light &{
+    border: 3px solid black;
+  }
+}
+
+.byText{
+  color: #ccc;
+}
+
+.storyTitleBar{
+  width: calc(100% - 350px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  font-size: 30px;
+  color: #999;
+
+  .light &{
+    color: #444444;
+  }
+  gap: 10px;
+}
+.storyTitleBar *{
+  width: 50%;
+  flex-grow: 1;
+
+}
+.storyTitleBar .by{
+  width: auto;
+  color: #888;
+
+  .light &{
+    color: #555;
+  }
+  flex-grow: 0;
+}
+.storyTitleBar .title{
+  text-align: right;
+
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+.storyTitleBar .author{
+  text-align: left;
+}
+
+.accountMenuHover {
+  position: absolute;
+  top: 55px;
+  right: 5px;
+  background: #333;
+  border: 1px solid #666;
+
+  .light &{
+    background-color: #ccc;
+    border: 1px solid #999;
+  }
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  z-index: 1000;
+  width: 150px;
+  padding: 10px 30px;
+  min-height: 50px;
+}
+
+.accountMenuHover * {
+  border: none;
+  border-bottom: 1px solid #666;
+  background: none;
+  color: white;
+
+  .light &{
+    border-color: #999;
+    color: black;
+  }
+  padding: 5px 0;
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.fontSizeInput {
+  width: 300px;
+  height: 40px;
+  margin: 5px 20px 5px 5px;
+  border: none;
+  border-radius: 5px;
+  background: #777;
+  color: white;
+}
+
+.spacer {
+  width: 100%;
+  flex-grow: 1;
+  display: block;
+}
+
+.accountMenuHover *:last-child {
+  border-bottom: none;
+}
+
+a, a:visited, a:active, a:link, button{
+  color: #666;
+  text-decoration: none;
+
+  .light &{
+    color: #333;
+  }
+}
+
+a:hover, button:hover {
+  color: white;
+
+  .light &{
+    color: black;
+  }
+}
+
+body{
+  background: #121212;
+  color: white;
+
+  &.light{
+    background-color: #fff7ee;
+    color: black;
+  }
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+
+/* Special styling for WebKit/Blink */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000000;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #666;
+  cursor: pointer;
+  margin-top: -5px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #bbb;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #FFF;
+}
+
+html{
+  overflow: hidden;
+}

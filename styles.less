@@ -1,0 +1,53 @@
+.redirectedModal {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333;
+  overflow: hidden;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 25%;
+  min-width: 400px;
+  max-width: 90%;
+  color: #999999;
+
+  font-size: var(--custom-font-size);
+  > div {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .redirectedHeader {
+    border-bottom: 1px solid #444;
+    padding: 15px;
+    font-weight: bold;
+    font-size: calc(var(--custom-font-size)*1.5);
+  }
+
+  .redirectedButtons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+    gap: 5px;
+    border-top: 1px solid #444;
+    button{
+      padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #333;
+        color: #999999;
+        cursor: pointer;
+
+    }
+  }
+
+    .redirectedBody {
+        padding: 20px;
+    }
+
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "id": "story",
+    "match": "/s/(?<storyId>\\d+)/(?<chapterNumber>\\d+)/?(?<storySlug>[a-zA-Z0-9-]+)?",
+    "wakeLock": true
+  }
+]

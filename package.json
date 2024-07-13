@@ -1,0 +1,28 @@
+{
+  "name": "BetterFFN",
+  "version": "1.0.4",
+  "description": "Better FFN is intended to improve the userExperience of FanFiction.net",
+  "private": true,
+  "scripts": {
+    "serve": "NODE_ENV=DEVELOPMENT webpack serve --no-hot",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Saelorable <bffn@salora.com>",
+  "license": "ISC",
+  "dependencies": {
+    "css-loader": "^6.10.0",
+    "html-webpack-plugin": "^5.6.0",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
+    "marked": "^13.0.2",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.90.3",
+    "webpack-dev-server": "^5.0.2",
+    "webpack-userscript": "^3.2.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
+  }
+}
