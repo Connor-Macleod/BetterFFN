@@ -6,13 +6,13 @@ FanFiction.Net. It adds a number of features to the site, including:
 
 ## Installation
 To install Better FFN, you will need a userscript manager. I recommend 
-using [Tampermonkey](https://www.tampermonkey.net/), as it is the most 
-popular and feature-rich userscript manager available. Once you have 
-Tampermonkey installed, you can install Better FFN by clicking 
-[here](betterffn.saelora.com/betterffn.user.js).
+using [Tampermonkey](https://www.tampermonkey.net/), as it is what 
+BetterFFN is tested on. Once you have Tampermonkey installed, you can 
+install Better FFN by clicking
+[here](/betterFFN.user.js).
 
 An automatic updating version of the script is available 
-[here](betterffn.saelora.com/betterffn.user.js). This version will always 
+[here](/betterFFN.proxy.user.js). This version will always 
 remain up to date, but may be less stable than the stable version. And may 
 not work with other userscript managers.
 

@@ -5,7 +5,6 @@ const package = require('./package.json');
 const fs = require('fs');
 const {marked} = require('marked');
 
-console.log(marked)
 const readme = fs.readFileSync(path.resolve(__dirname, 'README.md'), 'utf8');
 const indexHtml = marked(readme)
 

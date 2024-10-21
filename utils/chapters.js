@@ -53,6 +53,14 @@ Object.defineProperty(chapterUtils, 'chapters', {
     get: async () => {
         if (!chapters) {
             const chapterSelect = cacheElements.chapterSelect
+            if (!chapterSelect) {
+                return [{
+                    title: 'One Shot',
+                    number: 1,
+                    current: true,
+                    read: false
+                }]
+            }
             const chapterOptions = chapterSelect.querySelectorAll('option')
             const chaptersRead = await chapterUtils.chaptersRead
             chapters = Array.from(chapterOptions).map(option => {
