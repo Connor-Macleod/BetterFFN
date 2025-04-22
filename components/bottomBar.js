@@ -72,6 +72,44 @@ export default async (storyWrapper)=>{
                 break;
         }
     }
+    let touchPos = null;
+    document.body.ontouchstart = function (e) {
+        console.log('touchstart', e)
+        const changedTouch = e.changedTouches[0] // just dealing with a single touch point *should* be good enough
+        const xPos = changedTouch.clientX
+        const yPos = changedTouch.clientY
+        touchPos = { x: xPos, y: yPos }
+    }
+    document.body.ontouchend = function (e) {
+        console.log('touchend', e)
+        const changedTouch = e.changedTouches[0]
+        const xPos = changedTouch.clientX
+        const yPos = changedTouch.clientY
+        const xDiff = xPos - touchPos.x
+        const yDiff = yPos - touchPos.y
+        if (Math.abs(xDiff)>Math.abs(yDiff)) {
+            // horizontal swipe
+            // a horizontal swipe needs to be really big to be considered a swipe, at least 50px. we also always want to
+            // load the next chapter if the user swipes.
+            if (Math.abs(xDiff) > 50) {
+                if (xDiff < 0) {
+                    // right to left swipe
+                    storyPageUtils.nextPage(true)
+                } else {
+                    // left to right swipe
+                    storyPageUtils.prevPage(true)
+                }
+            }
+
+
+        } else {
+            // vertical swipe
+            // we don't care about vertical swipes, we just want to ignore them
+            return touchPos = null
+        }
+
+        touchPos = null // we've handled the touch event, so we can clear the touchPos variable
+    }
 
     bottomBar.appendChild(prevPageButton)
     bottomBar.appendChild(chapterNumber)

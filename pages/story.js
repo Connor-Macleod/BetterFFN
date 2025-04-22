@@ -58,7 +58,7 @@ export default async function ({params}) {
     function timeSince(date) {
         const now = new Date()
         // make now midnight
-        now.setHours(0, 0, 0, 0)
+        now.setHours(24, 0, 0, 0)
         const ms = now - date
         // both dates are midnight, so we can just divide by the number of milliseconds in a day
         const days = Math.floor(ms / 86400000)

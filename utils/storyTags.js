@@ -7,7 +7,14 @@ let storyTags
 Object.defineProperty(storyTagsUtils, 'tags', {
     get: () => {
         if (!storyTags) {
-            const tags = profileUtils.domElement.lastElementChild.innerText.split(' - ')
+            const tagsElement = profileUtils.domElement.lastElementChild
+            const timeTags = Array.from(tagsElement.querySelectorAll('span [data-xutime]')).map(element=>{
+                const time = element.getAttribute('data-xutime')
+                return new Date(parseInt(time)*1000)
+            })
+            timeTags.sort((a, b)=> a - b)
+            const tags = tagsElement.innerText.split(' - ')
+
 
             const storyInfo = tags.reduce((acc, tag, i) => {
                 if (tag.includes(":")) {
@@ -25,12 +32,11 @@ Object.defineProperty(storyTagsUtils, 'tags', {
                         case 'follows':
                             value = parseInt(value.replace(/,/g, ''))
                             break;
-                        case 'updated':
                         case 'published':
-                            if (!/20\d{2}/.test(value)) {
-                                value += ', ' + new Date().getFullYear()
-                            }
-                            value = new Date(value)
+                            value = timeTags[0];
+                            break;
+                        case 'updated':
+                            value = timeTags[1] || timeTags[0]; // if no updated date, use published date
                             break;
                     }
                     acc[key.toLowerCase()] = value

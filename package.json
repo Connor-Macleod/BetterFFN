@@ -4,7 +4,7 @@
   "description": "Better FFN is intended to improve the userExperience of FanFiction.net",
   "private": true,
   "scripts": {
-    "serve": "NODE_ENV=DEVELOPMENT webpack serve --no-hot",
+    "serve": "NODE_ENV=DEVELOPMENT webpack serve --no-hot --host 0.0.0.0 --port 3005",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

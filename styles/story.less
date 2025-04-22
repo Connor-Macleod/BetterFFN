@@ -1,5 +1,10 @@
 .storyText {
-  width: 50vw;
+  @media (orientation: landscape) {
+    // width: 50vw;
+  }
+  @media (orientation: portrait) {
+    // width: calc(100vw - 100px);
+  }
   padding: 0 50px;
   width: auto;
   text-align: justify;
@@ -14,7 +19,7 @@
         transform: translateY(0);
     }
     to {
-        transform: translateY(-50px);
+        transform: translateY(-100px);
     }
   }
   @keyframes slidedown {
@@ -22,22 +27,22 @@
       transform: translateY(0);
     }
     to {
-      transform: translateY(50px);
+      transform: translateY(100px);
     }
   }
   .topBar{
     animation: slideup 0.5s ease-in-out;
-    transform: translateY(-50px);
+    transform: translateY(-100px);
   }
   .bottomBar, .progress{
     animation: slidedown 0.5s ease-in-out;
-    transform: translateY(50px);
+    transform: translateY(100px);
   }
 }
 
 @keyframes returndown {
   from {
-    transform: translateY(-50px);
+    transform: translateY(-100px);
   }
   to {
     transform: translateY(0px);
@@ -46,7 +51,7 @@
 
 @keyframes returnup {
   from {
-    transform: translateY(50px);
+    transform: translateY(100px);
   }
   to {
     transform: translateY(0px);
@@ -58,8 +63,14 @@
 }
 .topBar {
   animation: returndown 0.5s ease-in-out;
-  height: 50px;
   width: 100vw;
+
+  @media (orientation: portrait) {
+    height: 100px;
+  }
+  @media (orientation: landscape) {
+      height: 50px;
+  }
   background-color: black;
   position: fixed;
   top: 0;
@@ -68,14 +79,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  svg, path {
+    fill: #bbb;
+  }
   .light &{
     background-color: #ffffff;
     color: black;
   }
 }
 
-.topBar * {
-  width: 150px;
+.topBar > * {
+  @media (orientation: landscape) {
+    width: 150px;
+  }
+  @media (orientation: portrait) {
+      width: 50px;
+  }
   color: #666!important; /* fuck you links */
   text-align: center;
   cursor: pointer;
@@ -170,12 +189,20 @@
 }
 
 .storyWrapper {
-  margin-top: 75px;
-  column-width: calc(50vw - 100px);
+
+  @media (orientation: landscape) {
+    column-width: calc(50vw - 100px);
+    height: calc(100vh - 150px);
+    margin-top: 75px;
+  }
+  @media (orientation: portrait) {
+      column-width: calc(100vw);
+    height: calc(100vh - 200px);
+    margin-top: 125px;
+  }
   column-fill: auto;
   column-gap: 0;
   column-rule: none;
-  height: calc(100vh - 150px);
   overflow: hidden;
   animation: showpage 0.25s linear;
   &.scrolling{
@@ -185,7 +212,12 @@
 }
 
 .titlePage{
-  width: calc(50vw - 100px);
+  @media (orientation: landscape) {
+    width: calc(50vw - 100px);
+  }
+  @media (orientation: portrait) {
+    width: 100vw;
+  }
   height: 100%;
   break-before: column;
   break-after: column;
@@ -193,10 +225,16 @@
     padding: 0 20px;
     text-align: center;
   }
+  overflow-y: auto;
 }
 
 .blankPage{
-  width: calc(50vw - 100px);
+  @media (orientation: landscape) {
+    width: calc(50vw - 100px);
+  }
+  @media (orientation: portrait) {
+    width: calc(100vw);
+  }
   height: 100%;
   break-before: column;
   break-after: column;
@@ -272,43 +310,87 @@
   color: #ccc;
 }
 
-.storyTitleBar{
-  width: calc(100% - 350px);
+.storyTitleBar {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
   font-size: 30px;
   color: #999;
 
-  .light &{
+
+  .light & {
     color: #444444;
   }
-  gap: 10px;
-}
-.storyTitleBar *{
-  width: 50%;
-  flex-grow: 1;
 
-}
-.storyTitleBar .by{
-  width: auto;
-  color: #888;
 
-  .light &{
-    color: #555;
+  * {
+    flex-grow: 1;
+
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
   }
-  flex-grow: 0;
-}
-.storyTitleBar .title{
-  text-align: right;
 
-  text-overflow: ellipsis;
-  text-wrap: nowrap;
-  overflow: hidden;
-}
-.storyTitleBar .author{
-  text-align: left;
+  .by {
+    width: auto;
+    color: #888;
+    @media (orientation: portrait) {
+      display: none;
+    }
+
+    .light & {
+      color: #555;
+    }
+
+    flex-grow: 0;
+  }
+  &.showFullTitle {
+    align-items: flex-start;
+    justify-content: start;
+    background: #000;
+    height: auto;
+    align-self: start;
+    border-radius: 30px;
+    .light & {
+      background: #fff;
+    }
+    .by{
+      display: block;
+      width: 100%;
+    }
+    * {
+      text-wrap: pretty;
+      overflow: visible;
+    }
+  }
+
+
+  @media (orientation: landscape) {
+    width: calc(100% - 350px);
+    height: 50px;
+    gap: 10px;
+    *{
+      width: 50%;
+    }
+
+    title {
+      text-align: right;
+
+    }
+
+    .author {
+      text-align: left;
+    }
+  }
+  @media (orientation: portrait) {
+    width: calc(100% - 100px);
+    height: 100px;
+    flex-direction: column;
+    *{
+      width: 100%;
+      text-align: center;
+    }
+  }
 }
 
 .accountMenuHover {
@@ -387,6 +469,7 @@ a:hover, button:hover {
 body{
   background: #121212;
   color: white;
+  min-width: auto;
 
   &.light{
     background-color: #fff7ee;
@@ -437,4 +520,15 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 html{
   overflow: hidden;
+}
+
+.portraitOnly{
+    @media not (orientation: portrait) {
+        display: none;
+    }
+}
+.landscapeOnly{
+    @media not (orientation: landscape) {
+        display: none;
+    }
 }
