@@ -11,6 +11,8 @@ const indexHtml = marked(readme)
 
 const dev = process.env.NODE_ENV === 'DEVELOPMENT';
 
+const deploymentTarget = process.env.DEPLOYMENT_TARGET || dev? 'http://localhost:8080' : 'http://betterffn.saelorable.com';
+
 module.exports = [
     {
         mode: dev ? 'development' : 'production',
@@ -82,7 +84,7 @@ module.exports = [
                     icon: 'https://www.google.com/s2/favicons?sz=64&domain=fanfiction.net',
                 },
                 proxyScript: {
-                    baseUrl: 'http://127.0.0.1:8080',
+                    baseURL: `${deploymentTarget}/`,
                     filename: '[basename].proxy.user.js',
                 },
             })

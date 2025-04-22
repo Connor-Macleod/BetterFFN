@@ -1,7 +1,7 @@
 {
   "name": "BetterFFN",
   "version": "1.0.4",
-  "description": "Better FFN is intended to improve the userExperience of FanFiction.net",
+  "description": "Better FFN is intended to improve the user experience of FanFiction.net",
   "private": true,
   "scripts": {
     "serve": "NODE_ENV=DEVELOPMENT webpack serve --no-hot --host 0.0.0.0 --port 3005",
