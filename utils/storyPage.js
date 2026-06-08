@@ -9,6 +9,12 @@ const progressWatchers = [
         if (end === 100) {
             window.history.replaceState(null, '', '#end')
         } else history.replaceState(null, '', `#${start*1000}`)
+    },
+    ({start, end}) => {
+        // if end is 100, we want to set the chapter as read\
+        if (end === 100) {
+            chapterUtils.markRead()
+        }
     }
 ]
 function updateProgress(updateHash = true) {
@@ -138,6 +144,7 @@ Object.defineProperty(storyPage, 'scrollToHash', {
         } else {
             storyPage.scrollTo(100)
         }
+        updateProgress(false)
     }
 })
 

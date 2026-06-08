@@ -16,7 +16,7 @@ export default async function ({params}) {
     const storyImage = cacheElements.storyImage.querySelector('img')?.dataset.original
 
 
-    const storyComplete = storyTags.status === 'Complete'
+    const storyComplete = storyTags.tags.status === 'Complete'
     storyText.className = ''
     storyText.id = ''
     document.body.removeAttribute('style')
@@ -136,12 +136,22 @@ export default async function ({params}) {
 
     storyText.className = 'storyText'
 
-
     readerMode.appendChild(topBar())
     readerMode.appendChild(storyWrapper)
     readerMode.appendChild(chapterProgress())
     readerMode.appendChild(bottomBarEl)
     if (currentChapter == 1) storyWrapper.appendChild(titlePage)
+
+    const chapterTitle = await chapters.chapterTitle
+    console.log('chapter title', chapterTitle);
+    console.log('match', /^Chapter \d*$/i.test(chapterTitle))
+    if (chapterTitle && !(/^Chapter \d*$/i.test(chapterTitle))) {
+        const chapterTitle = document.createElement('h2')
+        chapterTitle.className = 'chapterTitle'
+        chapterTitle.innerText = await chapters.chapterTitle
+        storyWrapper.appendChild(chapterTitle)
+    }
+
     storyWrapper.appendChild(storyText)
 
     const chapterCount = await chapters.chapterCount
@@ -170,34 +180,27 @@ export default async function ({params}) {
 
         let storyDetails = await storyUtils.storyDetails
 
-        const status = {
-            followStory: storyDetails.follow,
-            favStory: storyDetails.favourite,
-            followAuthor: storyDetails.author.follow,
-            favAuthor: storyDetails.author.favourite,
-        }
-        console.log(status)
-        followStoryButton.innerText = status.followStory ? 'Unfollow Story' : 'Follow Story'
-        favStoryButton.innerText = status.favStory ? 'Unfavourite Story' : 'Favourite Story'
-        followAuthorButton.innerText = status.followAuthor ? 'Unfollow Author' : 'Follow Author'
-        favAuthorButton.innerText = status.favAuthor ? 'Unfavourite Author' : 'Favourite Author'
+        followStoryButton.innerText = storyDetails.follow ? 'Unfollow Story' : 'Follow Story'
+        favStoryButton.innerText = storyDetails.favourite ? 'Unfavourite Story' : 'Favourite Story'
+        followAuthorButton.innerText = storyDetails.author.follow ? 'Unfollow Author' : 'Follow Author'
+        favAuthorButton.innerText = storyDetails.author.favourite ? 'Unfavourite Author' : 'Favourite Author'
 
         followStoryButton.onclick = async () => {
-            storyUtils.followStory()
-            followStoryButton.innerText = status.followStory ? 'Unfollow Story' : 'Follow Story'
+            await storyUtils.followStory()
+            followStoryButton.innerText = await storyUtils.storyDetails.follow ? 'Unfollow Story' : 'Follow Story'
 
         }
         favStoryButton.onclick = async () => {
-            storyUtils.favouriteStory()
-            favStoryButton.innerText = status.favouriteStory ? 'Unfavourite Story' : 'Favourite Story'
+            await storyUtils.favouriteStory()
+            favStoryButton.innerText = await storyUtils.storyDetails.favourite ? 'Unfavourite Story' : 'Favourite Story'
         }
         followAuthorButton.onclick = async () => {
-            storyUtils.followAuthor()
-            followAuthorButton.innerText = status.followAuthor ? 'Unfollow Author' : 'Follow Author'
+            await storyUtils.followAuthor()
+            followAuthorButton.innerText = await storyUtils.storyDetails.author.follow ? 'Unfollow Author' : 'Follow Author'
         }
         favAuthorButton.onclick = async () => {
-            storyUtils.favouriteAuthor()
-            favAuthorButton.innerText = status.favouriteAuthor ? 'Unfavourite Author' : 'Favourite Author'
+            await storyUtils.favouriteAuthor()
+            favAuthorButton.innerText = await storyUtils.storyDetails.author.favourite ? 'Unfavourite Author' : 'Favourite Author'
         }
 
 
@@ -225,6 +228,7 @@ export default async function ({params}) {
         storyWrapper.appendChild(blankPage)
         console.log('added blank page')
     }
+
 
     document.body.classList.toggle('light', !(await accountUtils.darkMode))
 }

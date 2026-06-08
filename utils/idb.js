@@ -5,7 +5,6 @@ const database = {}
 let activeDatabase
 
 function initDatabase() {
-    console.log('initDatabase')
     if (!account.loggedIn) return Promise.reject('Not logged in')
     if (activeDatabase) return activeDatabase;
     dbName = "betterFFN";

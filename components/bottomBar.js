@@ -2,6 +2,7 @@ import chapters from "../utils/chapters";
 import storyPageUtils from "../utils/storyPage";
 import storyUtils from "../utils/story";
 import idb from "../utils/idb";
+import chapterSelector from "./chapterSelector";
 
 export default async (storyWrapper)=>{
     storyPageUtils.storyWrapper = storyWrapper
@@ -28,24 +29,9 @@ export default async (storyWrapper)=>{
     chapterNumber.appendChild(currentChapterEl)
     chapterNumber.appendChild(chapterDivider)
     chapterNumber.appendChild(chapterCountEl)
-    chapterNumber.title = chapters.chapterTitle
+    chapterNumber.title = await chapters.chapterTitle
     chapterNumber.onclick = function () {
-        const urlParts = window.location.pathname.split('/')
-        if (chapters.allChaptersRead) {
-            if (chapters.currentChapter < chapters.chapterCount) {
-                urlParts[3] = parseInt(chapters.chapterCount)
-            } else {
-                urlParts[3] = 1
-            }
-        } else {
-            let chap = parseInt(chapters.currentChapter) + 1
-            while (chapters.chaptersRead[storyUtils.storyId].includes(chap)) {
-                chap++
-                if (chap > parseInt(chapters.chapterCount)) chap = 1
-            }
-            urlParts[3] = chap
-        }
-        window.location.assign(urlParts.join('/'))
+        chapterSelector()
     }
 
 

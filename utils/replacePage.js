@@ -1,9 +1,9 @@
 const elementQueue = [];
 
 let elementsAlreadyAdded = false;
-export function addElement(el){
+export function addElement(el, wait = true){
     elementQueue.push(el)
-    if (elementsAlreadyAdded) {
+    if (elementsAlreadyAdded || !wait) {
         document.body.appendChild(el)
     }
 }

@@ -11,7 +11,7 @@ const indexHtml = marked(readme)
 
 const dev = process.env.NODE_ENV === 'DEVELOPMENT';
 
-const deploymentTarget = process.env.DEPLOYMENT_TARGET || dev? 'http://localhost:8080' : 'http://betterffn.saelorable.com';
+const deploymentTarget = process.env.DEPLOYMENT_TARGET || dev? 'http://localhost:3005' : 'http://betterffn.saelorable.com';
 
 module.exports = [
     {

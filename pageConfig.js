@@ -8,6 +8,8 @@ const foundPage = pageConfig.find(page => {
     const regex = new RegExp(page.match)
     if (regex.test(currentPath)) {
         pathParams = regex.exec(currentPath)?.groups || pathParams
+        pathParams.chapterNumber ||= 1
+        pathParams.storySlug ||= ""
         return page;
     }
 })

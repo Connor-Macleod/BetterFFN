@@ -14,7 +14,7 @@ const saveChaptersRead = () => {
 Object.defineProperty(chapterUtils, 'chaptersRead', {
     get: async ()=>{
         const story = await storyUtils.storyDetails
-        console.log('story:', story)
+        console.log('story for chapters read:', story)
         return story.chapters || []
     }
 })
@@ -35,16 +35,17 @@ Object.defineProperty(chapterUtils, 'allChaptersRead', {
 
 const markRead = async (chapter) => {
     let chaptersRead = await chapterUtils.chaptersRead
+    const story = await storyUtils.storyDetails
     if (!chaptersRead) {
         chaptersRead = []
     }
-    chaptersRead.push(chapter)
-    chaptersRead[config.props.storyId] = Array.from(new Set(chaptersRead[config.props.storyId].sort((a, b) => a - b)))
-    storyUtils.storyDetails.update()
+    chaptersRead.push(await(chapter.number || chapter))
+    const chaptersReadSet = new Set(chaptersRead)
+    chaptersRead = Array.from(chaptersReadSet).sort((a, b) => a - b)
+    console.log('chapters read', chaptersRead)
+    story.chapters = chaptersRead
+    story.update()
 }
-Object.defineProperty(chapterUtils, 'markChapterRead', {
-    set: markRead[config.props.storyId]
-})
 Object.defineProperty(chapterUtils, 'markRead', {
     value: ()=>markRead(chapterUtils.currentChapter)
 })
@@ -64,8 +65,10 @@ Object.defineProperty(chapterUtils, 'chapters', {
             const chapterOptions = chapterSelect.querySelectorAll('option')
             const chaptersRead = await chapterUtils.chaptersRead
             chapters = Array.from(chapterOptions).map(option => {
+                const chapterNumberReplacement = new RegExp(`^${parseInt(option.value)}\. `, 'i')
+                const numberStrippedChapterTitle = option.innerText.replace(chapterNumberReplacement, '')
                 return {
-                    title: option.innerText,
+                    title: numberStrippedChapterTitle,
                     number: parseInt(option.value),
                     current: option.selected,
                     read: chaptersRead.includes(parseInt(option.value))
@@ -86,7 +89,8 @@ Object.defineProperty(chapterUtils, 'currentChapter', {
 Object.defineProperty(chapterUtils, 'chapterTitle', {
     get: async () => {
         const chapters = await chapterUtils.chapters
-        return chapters.find(chapter => chapter.current).title
+        const currentChapter = chapters.find(chapter => chapter.current)
+        return chapters.length > 1 ? currentChapter.title : 'One Shot'
     }
 })
 
@@ -94,6 +98,17 @@ Object.defineProperty(chapterUtils, 'chapterCount', {
     get: async () => {
         const chapters = await chapterUtils.chapters
         return chapters[chapters.length - 1].number
+    }
+})
+
+Object.defineProperty(chapterUtils, 'goto', {
+    value: async (chapter) => {
+        if (chapter.number){
+            chapter = chapter.number
+        }
+        const urlParts = window.location.pathname.split('/')
+        urlParts[3] = chapter
+        window.location.assign(urlParts.join('/'))
     }
 })
 

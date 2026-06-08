@@ -211,6 +211,10 @@
   }
 }
 
+h2.chapterTitle{
+  margin: 0px 50px 30px
+}
+
 .titlePage{
   @media (orientation: landscape) {
     width: calc(50vw - 100px);
@@ -329,11 +333,13 @@
     text-overflow: ellipsis;
     text-wrap: nowrap;
     overflow: hidden;
+    text-decoration: none;
   }
 
   .by {
     width: auto;
     color: #888;
+    text-overflow: initial;
     @media (orientation: portrait) {
       display: none;
     }
@@ -449,6 +455,75 @@
   border-bottom: none;
 }
 
+.chapterSelect {
+  position: absolute;
+  margin-bottom: 55px;
+  margin-left: 0px;
+  width: 300px;
+  max-height: calc(100vh - 120px);
+
+  background: #333;
+  border: 1px solid #666;
+  border-radius: 5px 0px;
+  padding: 0;
+
+  .chapterList {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin: 0;
+
+
+    .chapterItem {
+      padding: 10px 20px;
+      color: white;
+      cursor: pointer;
+      text-align: center;
+      border-bottom: 1px solid #666;
+      position: relative;
+      &.current{
+        text-decoration: underline;
+        cursor: default;
+        &::before, &::after{
+            content: '🔖';
+            position: absolute;
+            font-size: 20px;
+            line-height: 20px;
+            width: 20px;
+            height: 20px;
+        }
+        &::before{
+            left: 5px;
+        }
+        &::after{
+            right: 5px;
+        }
+      }
+      &.read{
+        text-decoration: underline;
+      }
+
+      .light &{
+          color: black;
+          border-color: #999;
+      }
+
+      &:not(.current):hover {
+          background: #444;
+          .light &{
+          background-color: #ddd;
+          }
+      }
+    }
+  }
+
+
+  .light &{
+    background-color: #fff;
+    color: black;
+  }
+}
+
 a, a:visited, a:active, a:link, button{
   color: #666;
   text-decoration: none;
@@ -460,6 +535,8 @@ a, a:visited, a:active, a:link, button{
 
 a:hover, button:hover {
   color: white;
+  text-decoration: none;
+  border-bottom: none;
 
   .light &{
     color: black;

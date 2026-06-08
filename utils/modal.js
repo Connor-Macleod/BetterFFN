@@ -30,6 +30,6 @@ export default function (body, title, buttons) {
     modal.appendChild(redirectedButtons)
 
 
-    addElement(modal)
+    addElement(modal, false)
     return modal
 }
